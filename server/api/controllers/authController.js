@@ -11,7 +11,7 @@ authController.signIn = async (req, resp, next) => {
         exceptions.empty(req.body);
         const tabelaObject = User.tableAttributes
         delete tabelaObject.id;
-        delete tabelaObject.username;
+        delete tabelaObject.userName;
         delete tabelaObject.confirmPassword
         exceptions.equalBody(req.body, tabelaObject);
         Object.entries(req.body).forEach(el => {
@@ -35,7 +35,7 @@ authController.signIn = async (req, resp, next) => {
                 resp.status(200).send({
                     ...payload,
                     jwt: jwtSimple.encode(payload, env.jwtSecret)
-                  });
+                });
             } else {
                 console.log('ERROR:', error);
                 resp.status(404).send({
@@ -60,18 +60,18 @@ authController.signIn = async (req, resp, next) => {
 }
 authController.validate = async (req, resp, next) => {
     try {
-      exceptions.empty(req.body)
-      const token = jwtSimple.decode(req.body.jwt, env.jwtSecret);
-      if (new Date(token.exp * 1000) > new Date()) {
-        resp.status(200).json({
-          exception: false,
-          message: true
-        });
-      } else {
-        resp.status(400).send({ exception: true, message: "Expired" });
-      }
+        exceptions.empty(req.body)
+        const token = jwtSimple.decode(req.body.jwt, env.jwtSecret);
+        if (new Date(token.exp * 1000) > new Date()) {
+            resp.status(200).json({
+                exception: false,
+                message: true
+            });
+        } else {
+            resp.status(400).send({ exception: true, message: "Expired" });
+        }
     } catch (msg) {
-      resp.send(403).send({ exception: true, message: msg });
+        resp.send(403).send({ exception: true, message: msg });
     }
 }
 

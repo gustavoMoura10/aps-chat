@@ -19,7 +19,7 @@ const User = connection.define('user', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    username: {
+    userName: {
         type: DataTypes.STRING(50),
         allowNull: false
     }

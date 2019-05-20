@@ -4,22 +4,27 @@ const User = require('../api/models/user');
 const env = require('./.env');
 const Strategy = passportJwt.Strategy;
 
+
 const strategy = new Strategy(
     {
         secretOrKey: env.jwtSecret,
-        jwtFromRequest:passportJwt.ExtractJwt.fromAuthHeaderAsBearerToken()
+        jwtFromRequest: passportJwt.ExtractJwt.fromAuthHeaderAsBearerToken()
     }, (payload, done) => {
         if (!payload) {
-            console.log('ERROR:NO PAYLOAD SENT');
+            done(error, false, { message: 'No Payload Sent' });
         } else {
             let id = payload.id;
-            User.findByPk(id).then(result =>{
-                done(null,result?{...payload}:false);
-            }).error(error =>{
-                done(error,false);
-            })
+            if (new Date(payload.exp * 1000) > new Date()) {
+                done(null, false, { message: "Expired Token" });
+            } else {
+                User.findByPk(id).then(result => {
+                    done(null, result ? { ...payload } : false);
+                }).error(error => {
+                    done(error, false, { message: 'No User Found' });
+                });
+            }
         }
     });
-    passport.use(strategy);
+passport.use(strategy);
 
-module.exports = passport.authenticate('jwt',{session:false});
+module.exports = passport.authenticate('jwt', { session: false });

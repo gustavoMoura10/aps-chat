@@ -10,15 +10,17 @@ userController.createUser = async (req, resp, next) => {
         const tabelaObject = User.tableAttributes
         delete tabelaObject.id;
         tabelaObject.confirmPassword = undefined;
+        console.log(Object.keys(req.body).sort());
+        console.log(Object.keys(tabelaObject).sort());
         exceptions.equalBody(req.body, tabelaObject);
         Object.entries(req.body).forEach(el => {
             exceptions.empty(el[1]);
         });
-        exceptions.equals(req.body.password,req.body.confirmPassword);
+        exceptions.equals(req.body.password, req.body.confirmPassword);
         const salt = bcrypt.genSaltSync(10);
         req.body.password = bcrypt.hashSync(req.body.password, salt);
         delete req.body.confirmPassword;
-        User.create(req.body).then(result =>{
+        User.create(req.body).then(result => {
             const object = result.get();
             delete object.password;
             resp.status(200).send(object);
