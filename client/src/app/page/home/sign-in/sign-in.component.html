@@ -1,0 +1,33 @@
+<div class="row sign-in">
+    <div>
+        <img class="img-fluid" src="https://neilpatel-qvjnwj7eutn3.netdna-ssl.com/wp-content/uploads/2017/04/chat.jpg"
+            alt="">
+    </div>
+    <div class="col-md">
+        <h4 class="text-center">Login</h4>
+
+        <form [formGroup]="loginForm" class="form mt-4" (submit)="signIn()">
+
+            <div class="form-group">
+                <input #email formControlName="email" type="email" class="form-control" placeholder="Email" autofocus>
+                <ac-message *ngIf="loginForm.get('email').errors?.required" alert="danger" text="Email Required">
+                </ac-message>
+                <ac-message *ngIf="loginForm.get('email').errors?.email" alert="danger" text="Invalid Email">
+                </ac-message>
+            </div>
+
+            <div class="form-group">
+                <input formControlName="password" type="password" class="form-control" placeholder="Password">
+                <ac-message *ngIf="loginForm.get('password').errors?.required" alert="danger" text="Password Required">
+                </ac-message>
+            </div>
+
+            <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary btn-block">
+                login
+            </button>
+
+        </form>
+
+        <p>Not a user?<a href="/register">Register now</a></p>
+    </div>
+</div>

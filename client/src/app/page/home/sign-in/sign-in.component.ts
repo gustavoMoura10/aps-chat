@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User } from '../../models/user.model';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { PlatformService } from 'src/app/core/platform/platform.service';
+import { User } from 'src/app/models/user.model';
 @Component({
-    templateUrl: './signin.component.html',
-
+    templateUrl: './sign-in.component.html',
+    styleUrls: ['./sign-in.component.css']
 })
 export class SigninComponent implements OnInit {
     loginForm: FormGroup;
