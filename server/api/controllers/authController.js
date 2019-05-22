@@ -38,7 +38,7 @@ authController.signIn = async (req, resp, next) => {
                     jwt: jwtSimple.encode(payload, env.jwtSecret)
                 });
             } else {
-                console.log('ERROR:Senha Errada')
+                console.log('ERROR:Wrong Password');
                 resp.status(401).send({
                     exception: true,
                     message: 'Wrong Password'

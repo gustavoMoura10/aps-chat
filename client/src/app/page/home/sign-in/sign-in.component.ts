@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/core/auth/auth.service';
-import { PlatformService } from 'src/app/core/platform/platform.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { PlatformService } from 'src/app/services/platform/platform.service';
 import { User } from 'src/app/models/user.model';
 @Component({
     templateUrl: './sign-in.component.html',
@@ -14,7 +14,7 @@ export class SigninComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private authService: AuthService,
-        private platformService: PlatformService
+        private platformService: PlatformService,
     ) { }
 
     signIn() {
@@ -24,8 +24,10 @@ export class SigninComponent implements OnInit {
         this.authService.authenticate(this.user).subscribe(
             result => {
                 this.user = undefined;
+                console.log(result)
             },
             error => {
+                console.log(error)
                 this.loginForm.reset();
                 if (this.platformService.isPlatformBrowser()) {
                     this.emailInput.nativeElement.focus();

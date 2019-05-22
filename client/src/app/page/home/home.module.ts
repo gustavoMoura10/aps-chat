@@ -8,6 +8,7 @@ import { MessageModule } from 'src/app/page/shared/message/message.module';
 import { MainComponent } from './main/main.component';
 @NgModule({
     declarations: [
+        MainComponent,
         SigninComponent,
         RegisterComponent,
         MainComponent
