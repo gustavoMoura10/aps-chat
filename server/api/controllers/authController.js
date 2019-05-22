@@ -28,6 +28,7 @@ authController.signIn = async (req, resp, next) => {
                 const now = Math.floor(Date.now() / 1000);
                 const payload = {
                     id: result.id,
+                    userName:result.userName,
                     email: result.email,
                     iat: now,
                     exp: now + 60 * 60 * 24
@@ -37,8 +38,8 @@ authController.signIn = async (req, resp, next) => {
                     jwt: jwtSimple.encode(payload, env.jwtSecret)
                 });
             } else {
-                console.log('ERROR:', error);
-                resp.status(404).send({
+                console.log('ERROR:Senha Errada')
+                resp.status(401).send({
                     exception: true,
                     message: 'Wrong Password'
                 });

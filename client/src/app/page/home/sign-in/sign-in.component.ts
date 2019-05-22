@@ -17,12 +17,6 @@ export class SigninComponent implements OnInit {
         private platformService: PlatformService
     ) { }
 
-    ngOnInit(): void {
-        this.loginForm = this.formBuilder.group({
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required]
-        });
-    }
     signIn() {
         this.user = new User();
         this.user.email = this.loginForm.get('email').value;
@@ -40,6 +34,12 @@ export class SigninComponent implements OnInit {
                 alert('Invalid Email or Password');
             }
         )
+    }
+    ngOnInit(): void {
+        this.loginForm = this.formBuilder.group({
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', Validators.required]
+        });
     }
 
 }

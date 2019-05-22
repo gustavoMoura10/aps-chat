@@ -1,3 +1,31 @@
-<div>
-    Ola
+<div class="register">
+    <form [formGroup]="registerForm" (submit)="register()">
+        <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input type="email" formControlName="email" class="form-control" id="inputEmail" placeholder="Enter email">
+            <ac-message *ngIf="registerForm.get('email').errors?.required" alert="danger" text="Email Required">
+            </ac-message>
+            <ac-message *ngIf="registerForm.get('email').errors?.email" alert="danger" text="Invalid Email">
+            </ac-message>
+        </div>
+        <div class="form-group">
+            <label for="inputUserName">User Name</label>
+            <input type="text" formControlName="userName" class="form-control" id="inputUserName" placeholder="User Name">
+            <ac-message *ngIf="registerForm.get('userName').errors?.required" alert="danger" text="User Name Required">
+            </ac-message>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input type="password" formControlName="password" class="form-control" id="inputPassword" placeholder="Password">
+            <ac-message *ngIf="registerForm.get('password').errors?.required" alert="danger" text="Password Required">
+            </ac-message>
+        </div>
+        <div class="form-group">
+            <label for="inputConfirmPassword">Confirm Password</label>
+            <input type="password" formControlName="confirmPassword" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password">
+            <ac-message *ngIf="registerForm.get('password').errors?.required" alert="danger" text="Password Required">
+            </ac-message>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
