@@ -8,7 +8,7 @@ module.exports = app => {
     app.use('/api/', passport);
     app.get('/api/teste', (res, resp) => {
         resp.status(200).json({
-            message:'Ola'
+            message: 'Ola'
         })
     })
     const http = require('http').createServer(app);

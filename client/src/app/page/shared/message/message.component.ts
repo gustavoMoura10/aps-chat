@@ -1,10 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
-    selector:'ac-message',
-    templateUrl:'./message.component.html'
+    selector: 'ac-message',
+    templateUrl: './message.component.html'
 })
-export class MessageComponent{
-    @Input() text:string;
-    @Input() alert:string;
+export class MessageComponent implements OnInit {
+    constructor(private router: Router) {
+
+    }
+    @Input() text: string;
+    @Input() alert: string;
+    ngOnInit() {
+        console.log(this.router.url)
+    }
+
 }

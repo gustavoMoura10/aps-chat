@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NavigationComponent } from './navigation/navigation.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MessageModule } from '../page/shared/message/message.module';
 import { CommonModule } from '@angular/common';
 
@@ -10,6 +10,10 @@ import { CommonModule } from '@angular/common';
     ],
     exports: [
         NavigationComponent
+    ],
+    imports: [
+        FormsModule,
+        CommonModule
     ]
 })
 export class TemplateModule {
