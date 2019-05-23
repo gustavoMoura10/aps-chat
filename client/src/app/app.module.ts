@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './page/home/home.module';
 import { TemplateModule } from './template/template.module';
 import { CommonModule } from '@angular/common';
+import { ChatModule } from './page/chat/chat.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CommonModule } from '@angular/common';
     HomeModule,
     TemplateModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    ChatModule
   ],
   providers: [],
   bootstrap: [AppComponent]

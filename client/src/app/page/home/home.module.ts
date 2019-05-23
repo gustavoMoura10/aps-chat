@@ -10,7 +10,8 @@ import { MainComponent } from './main/main.component';
     declarations: [
         MainComponent,
         SigninComponent,
-        RegisterComponent
+        RegisterComponent,
+        MainComponent
     ],
     imports: [
         ReactiveFormsModule,

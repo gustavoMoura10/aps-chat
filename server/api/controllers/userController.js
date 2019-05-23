@@ -13,6 +13,7 @@ userController.createUser = async (req, resp, next) => {
         console.log(Object.keys(req.body).sort());
         console.log(Object.keys(tabelaObject).sort());
         exceptions.equalBody(req.body, tabelaObject);
+        console.log(req.body)
         Object.entries(req.body).forEach(el => {
             exceptions.empty(el[1]);
         });

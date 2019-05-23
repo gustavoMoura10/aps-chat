@@ -28,6 +28,7 @@ authController.signIn = async (req, resp, next) => {
                 const now = Math.floor(Date.now() / 1000);
                 const payload = {
                     id: result.id,
+                    userName:result.userName,
                     email: result.email,
                     iat: now,
                     exp: now + 60 * 60 * 24
@@ -38,7 +39,7 @@ authController.signIn = async (req, resp, next) => {
                 });
             } else {
                 console.log('ERROR:Wrong Password');
-                resp.status(404).send({
+                resp.status(401).send({
                     exception: true,
                     message: 'Wrong Password'
                 });

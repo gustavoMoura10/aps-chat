@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { HttpClient } from '@angular/common/http';
-import { UrlService } from '../url/url.service';
+import { UrlService } from '../../url/url.service';
 import { tap } from 'rxjs/operators';
 
 
