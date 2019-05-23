@@ -12,9 +12,7 @@ export class AuthService {
     constructor(private http: HttpClient, private token: TokenService, private urlService: UrlService) { }
     authenticate(user: User) {
         delete user.id
-        return this.http.post(`${this.urlService.getUrlApi()}/signIn`,
-            user
-            ,
+        return this.http.post(`${this.urlService.getUrlApi()}/signIn`, user,
             { observe: 'response' }
         ).pipe(tap(
             result => {
