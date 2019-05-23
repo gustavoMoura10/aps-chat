@@ -15,16 +15,16 @@ const strategy = new Strategy(
         } else {
             let id = payload.id;
             if (new Date(payload.exp * 1000) > new Date()) {
-                done(null, false, { message: "Expired Token" });
-            } else {
                 User.findByPk(id).then(result => {
                     done(null, result ? { ...payload } : false);
                 }).error(error => {
                     done(error, false, { message: 'No User Found' });
                 });
+            } else {
+                done(null, false, { message: "Expired Token" });
             }
         }
     });
 passport.use(strategy);
 
-module.exports = passport.authenticate('jwt', { session: false });
+module.exports = passport.authenticate('jwt', { session: false ,});

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PlatformService } from 'src/app/services/platform/platform.service';
 import { User } from 'src/app/models/user.model';
+import { Router } from '@angular/router';
 @Component({
     templateUrl: './sign-in.component.html',
     styleUrls: ['./sign-in.component.css']
@@ -15,6 +16,7 @@ export class SigninComponent implements OnInit {
         private formBuilder: FormBuilder,
         private authService: AuthService,
         private platformService: PlatformService,
+        private router:Router
     ) { }
 
     signIn() {
@@ -23,8 +25,8 @@ export class SigninComponent implements OnInit {
         this.user.password = this.loginForm.get('password').value;
         this.authService.authenticate(this.user).subscribe(
             result => {
-                this.user = undefined;
-                console.log(result)
+                console.log(localStorage.getItem('userName'))
+                this.router.navigate(['user',localStorage.getItem('userName')])
             },
             error => {
                 console.log(error)

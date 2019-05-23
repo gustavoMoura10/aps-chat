@@ -7,7 +7,9 @@ module.exports = app => {
     })
     app.use('/api/', passport);
     app.get('/api/teste', (res, resp) => {
-        resp.send('ola')
+        resp.status(200).json({
+            message:'Ola'
+        })
     })
     const http = require('http').createServer(app);
     const io = require('socket.io')(http);
