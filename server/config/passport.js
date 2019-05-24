@@ -27,4 +27,4 @@ const strategy = new Strategy(
     });
 passport.use(strategy);
 
-module.exports = passport.authenticate('jwt', { session: false ,});
+module.exports = passport.authenticate('jwt', { session: false });

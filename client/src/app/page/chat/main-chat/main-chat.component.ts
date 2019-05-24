@@ -9,6 +9,6 @@ export class MainChatComponent implements OnInit {
     constructor(private chatService: MainChatService) { }
 
     ngOnInit() {
-        /*  this.chatService.userConected(); */
+        this.chatService.userConected();
     }
 }
