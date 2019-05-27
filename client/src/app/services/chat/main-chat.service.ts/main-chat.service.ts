@@ -10,8 +10,8 @@ export class MainChatService {
     constructor(private authService: AuthService, private chatService: WebSocketService) {
     }
 
-    userConected() {
-        this.chatService.connect();
+    test() {
+        return this.authService.getToken();
     }
 
 }

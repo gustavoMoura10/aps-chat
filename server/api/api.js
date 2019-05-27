@@ -1,5 +1,4 @@
 const passport = require('../config/passport');
-/* const WebSocketServer = require('ws').Server; */
 const jwtSimple = require('jwt-simple');
 const env = require('../config/.env')
 module.exports = (app, server) => {
@@ -9,16 +8,47 @@ module.exports = (app, server) => {
         resp.send("Ola")
     })
     app.use('/api/', passport);
-    app.get('/api/teste', (res, resp) => {
-        resp.status(200).json({
-            message: 'Ola'
-        })
-    });
 
-    const socket = require('socket.io')(server, { path: '/chat' });
-    socket.on('connection', (user) => {
-        console.log(user)
-    })
+    const io = require('socket.io')(server,{path:'/chat'});
+    const documents = {};
+    
+    io.on('connection', socket => {
+        let previousId;
+        const safeJoin = currentId => {
+            socket.leave(previousId);
+            socket.join(currentId, () => console.log(`Socket ${socket.id} joined room ${currentId}`));
+            previousId = currentId;
+        }
+    
+        socket.on('getDoc', docId => {
+            safeJoin(docId);
+            socket.emit('document', documents[docId]);
+        });
+        socket.on('teste', docId => {
+            console.log(docId)
+            // safeJoin(docId);
+            // socket.emit('document', documents[docId]);
+        });
+    
+        socket.on('addDoc', doc => {
+            documents[doc.id] = doc;
+            safeJoin(doc.id);
+            console.log(doc)
+            io.emit('documents', Object.keys(documents));
+            socket.emit('document', doc);
+        });
+    
+        socket.on('editDoc', doc => {
+            documents[doc.id] = doc;
+            console.log(doc)
+            socket.to(doc.id).emit('document', doc);
+        });
+    
+        io.emit('documents', Object.keys(documents));
+    
+        console.log(`Socket ${socket.id} has connected`);
+    });
+    
 
     /*     const wss = new WebSocketServer({
             port: 3001,

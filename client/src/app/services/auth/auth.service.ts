@@ -19,16 +19,21 @@ export class AuthService {
                 localStorage.setItem('auth', `${result.body['jwt']}`);
                 localStorage.setItem('userName', result.body['userName']);
                 this.router.navigate(['user', this.getUser()])
-                this.http.get(`${this.urlService.getUrlApi()}/api/teste`).subscribe(
-                    result => {
-                        console.log(result)
-                    },
-                    error => {
-
-                    }
-                )
             }
         ))
+    }
+    validateToken(){
+        this.http.get(`${this.urlService.getUrlApi()}/api`).subscribe(
+            result =>{
+
+            },
+            error =>{
+                if(error.status === 401){
+                    localStorage.clear();
+                    this.router.navigate(['login'])
+                }
+            }
+        )
     }
     getToken() {
         return localStorage.getItem('auth');
