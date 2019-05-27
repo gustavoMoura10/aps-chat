@@ -9,7 +9,9 @@ import { TemplateModule } from './template/template.module';
 import { CommonModule } from '@angular/common';
 import { ChatModule } from './page/chat/chat.module';
 import { TokenInterceptor } from './services/auth/token.interceptor';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +23,8 @@ import { TokenInterceptor } from './services/auth/token.interceptor';
     TemplateModule,
     HttpClientModule,
     CommonModule,
-    ChatModule
+    ChatModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

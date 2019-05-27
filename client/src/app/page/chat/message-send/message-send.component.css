@@ -1,0 +1,12 @@
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.grid{
+    display: grid;
+    grid-template-columns: 95% auto
+}
+textarea {
+  resize: none;
+}

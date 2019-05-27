@@ -19,14 +19,7 @@ export class AuthService {
                 localStorage.setItem('auth', `${result.body['jwt']}`);
                 localStorage.setItem('userName', result.body['userName']);
                 this.router.navigate(['user', this.getUser()])
-                this.http.get(`${this.urlService.getUrlApi()}/api/teste`).subscribe(
-                    result => {
-                        console.log(result)
-                    },
-                    error => {
 
-                    }
-                )
             }
         ))
     }
@@ -41,5 +34,19 @@ export class AuthService {
     }
     hasToken() {
         return !!this.getToken();
+    }
+    validate() {
+        this.http.get(`${this.urlService.getUrlApi()}/api`).subscribe(
+            () => {
+                return false
+            },
+            error => {
+                if (error.status === 401) {
+                    this.router.navigate(['login']);
+                    return true;
+                }
+                return false
+            }
+        )
     }
 }

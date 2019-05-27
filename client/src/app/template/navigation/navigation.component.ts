@@ -22,5 +22,8 @@ export class NavigationComponent {
         this.authService.deleteStorages();
         this.router.navigate(['login'])
     }
+    getUser() {
+        return this.authService.getUser();
+    }
 
 }

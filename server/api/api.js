@@ -1,25 +1,36 @@
 const passport = require('../config/passport');
-/* const WebSocketServer = require('ws').Server; */
-const jwtSimple = require('jwt-simple');
-const env = require('../config/.env')
 module.exports = (app, server) => {
 
     app.use('', require('./routes/authRoute'))
-    app.get((req, resp, next) => {
-        resp.send("Ola")
-    })
     app.use('/api/', passport);
-    app.get('/api/teste', (res, resp) => {
-        resp.status(200).json({
-            message: 'Ola'
-        })
+    const documents = {};
+    const io = require('socket.io')(server);
+    io.on("connection", socket => {
+        let previousId;
+        const safeJoin = currentId => {
+            socket.leave(previousId);
+            socket.join(currentId);
+            previousId = currentId;
+        };
+
+        socket.on("getDoc", docId => {
+            safeJoin(docId);
+            socket.emit("document", documents[docId]);
+        });
+
+        socket.on("join", data => {
+
+            console.log(data)
+
+        });
+
+        socket.on("editDoc", doc => {
+            documents[doc.id] = doc;
+            socket.to(doc.id).emit("document", doc);
+        });
+
+        io.emit("documents", Object.keys(documents));
     });
-
-    const socket = require('socket.io')(server, { path: '/chat' });
-    socket.on('connection', (user) => {
-        console.log(user)
-    })
-
     /*     const wss = new WebSocketServer({
             port: 3001,
             path: "/chat",
