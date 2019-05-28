@@ -1,9 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MainChatService } from 'src/app/services/chat/main-chat.service.ts/main-chat.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { Room } from 'src/app/models/room.data';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ChatContentComponent } from '../chat-content/chat-content.component';
+import { Room } from 'src/app/models/room.model';
 
 @Component({
     selector: 'ac-main-chat',
@@ -11,56 +10,52 @@ import { ChatContentComponent } from '../chat-content/chat-content.component';
     templateUrl: './main-chat.component.html'
 })
 export class MainChatComponent implements OnInit {
-<<<<<<< HEAD
-    userName: string
-    room: Room;
-    roomForm: FormGroup
-    roomsList: Array<Room>
-    roomSelected:Room;
-    constructor(
-        private mainChatService: MainChatService,
-        private formBuilder: FormBuilder
-    ) { }
-    createRoom() {
-        this.room = new Room();
-        this.room.name = this.roomForm.get('name').value;
-        this.mainChatService.createNewRoom(this.room).subscribe(
-            result => {
-                this.roomForm.get('name').reset()
-                this.getRooms();
-            },
-            error => {
-                console.log(error)
-            }
-        )
-    }
-    getRooms() {
-        console.log('Passei')
-        this.mainChatService.getRooms().subscribe(
-            resultRooms => {
-                this.roomsList = resultRooms;
-                console.log(this.roomsList)
-            },
-            error => {
-                console.log(error)
-            }
-        )
-    }
-    ngOnInit() {
-        this.userName = this.mainChatService.getUserName();
-        this.roomForm = this.formBuilder.group({
-            name
-        })
-        this.getRooms();
-=======
     userName: string;
     room: string;
-    constructor(private mainChatService: MainChatService) { }
+    alert:string;
+    message:string;
+    bool:boolean;
+    roomCreate:Room;
+    formRoom:FormGroup;
+    constructor(
+        private mainChatService: MainChatService,
+        private formBuilder:FormBuilder) {
+            
+    }
+    leave() {
+        
+    }
+    createRoom(){
+        this.roomCreate = new Room();
+        this.mainChatService.createRoom(this.roomCreate).subscribe(
+            result =>{
+                this.mainChatService.emitRoomCreated(result)
+            },
+            error =>{
+                this.messageEvent('alert-danger','Error trying to Save Room',true);
+            }
+        )
+    }
     joinRoom() {
-        this.mainChatService.joinRoom({ userName: this.userName, room: this.room })
+        if (this.room)
+            this.mainChatService.joinRoom({ userName: this.userName, room: this.room })
+        else
+        this.messageEvent('alert-warning','No Room Selected',true)
+    }
+    messageEvent(alert,message,bool){
+        this.bool = bool;
+        this.alert = alert;
+        this.message = message;
+        setTimeout(()=>{
+            this.bool = !bool;
+            this.alert = undefined;
+            this.message = undefined;
+        },5000)
     }
     ngOnInit() {
         this.userName = this.mainChatService.getUser();
->>>>>>> bd5917ac3b8e75818183b37e056695f1f153c61d
+        this.formRoom = this.formBuilder.group({
+            name
+        })
     }
 }

@@ -1,37 +1,5 @@
-<<<<<<< HEAD
-<div class="main">
-    <div class="form-inline">
-        <div class="form-group">
-            <label for="userNameValue" class="col-sm-6 col-form-label">User:</label>
-            <div class="col-sm-5">
-                <label>{{userName}}</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="userNameValue" class="col-sm-5 col-form-label">Room:</label>
-            <div class="col-sm-6">
-                <select class="form-control" [(ngModel)]="roomSelected">
-                    <option value="" selected disabled>Select</option>
-                    <option *ngFor="let r of roomsList" [ngValue]="r">{{r.name}}</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <form [formGroup]="roomForm" (submit)="createRoom()">
-        <div class="form-group">
-            <label for="userNameValue" class="col-sm-5 col-form-label">New Room:</label>
-            <div class="col-sm-5">
-                <input type="text" formControlName="name" class="form-control">
-            </div>
-        </div>
-        <div class="col-sm-5">
-            <button type="submit" class="btn btn-primary">Create Room</button>
-        </div>
-    </form>
-    <chat-content [userName]="userName" [room]="roomSelected"></chat-content>
-=======
 <div class="main-chat">
-
+    <ac-message *ngIf="bool" alert="alert" text="message"></ac-message>
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">Room:</label>
         <div class="col-sm-4">
@@ -41,9 +9,10 @@
             </select>
         </div>
         <button class="btn btn-primary" (click)="joinRoom()">Join</button>
+        <button class="btn btn-primary" (click)="leave()">Leave</button>
     </div>
 
-    <form class="form">
+    <form class="form" [formGroup]="formRoom">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">New Room:</label>
             <div class="col-sm-4">
@@ -53,5 +22,4 @@
         </div>
     </form>
     <ac-content class="mx-auto"></ac-content>
->>>>>>> bd5917ac3b8e75818183b37e056695f1f153c61d
 </div>

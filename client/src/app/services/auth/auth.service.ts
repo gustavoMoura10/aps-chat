@@ -19,10 +19,6 @@ export class AuthService {
                 localStorage.setItem('auth', `${result.body['jwt']}`);
                 localStorage.setItem('userName', result.body['userName']);
                 this.router.navigate(['user', this.getUser()])
-<<<<<<< HEAD
-=======
-
->>>>>>> bd5917ac3b8e75818183b37e056695f1f153c61d
             }
         ))
     }
