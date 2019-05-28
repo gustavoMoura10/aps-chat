@@ -1,13 +1,14 @@
 const passport = require('../config/passport');
+<<<<<<< HEAD
 const jwtSimple = require('jwt-simple');
 const env = require('../config/.env')
+=======
+>>>>>>> bd5917ac3b8e75818183b37e056695f1f153c61d
 module.exports = (app, server) => {
 
     app.use('', require('./routes/authRoute'))
-    app.get((req, resp, next) => {
-        resp.send("Ola")
-    })
     app.use('/api/', passport);
+<<<<<<< HEAD
 
     const io = require('socket.io')(server,{path:'/chat'});
     const documents = {};
@@ -49,7 +50,36 @@ module.exports = (app, server) => {
         console.log(`Socket ${socket.id} has connected`);
     });
     
+=======
+    const documents = {};
+    const io = require('socket.io')(server);
+    io.on("connection", socket => {
+        let previousId;
+        const safeJoin = currentId => {
+            socket.leave(previousId);
+            socket.join(currentId);
+            previousId = currentId;
+        };
 
+        socket.on("getDoc", docId => {
+            safeJoin(docId);
+            socket.emit("document", documents[docId]);
+        });
+
+        socket.on("join", data => {
+>>>>>>> bd5917ac3b8e75818183b37e056695f1f153c61d
+
+            console.log(data)
+
+        });
+
+        socket.on("editDoc", doc => {
+            documents[doc.id] = doc;
+            socket.to(doc.id).emit("document", doc);
+        });
+
+        io.emit("documents", Object.keys(documents));
+    });
     /*     const wss = new WebSocketServer({
             port: 3001,
             path: "/chat",

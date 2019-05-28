@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="main">
     <div class="form-inline">
         <div class="form-group">
@@ -28,4 +29,29 @@
         </div>
     </form>
     <chat-content [userName]="userName" [room]="roomSelected"></chat-content>
+=======
+<div class="main-chat">
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Room:</label>
+        <div class="col-sm-4">
+            <select name="" id="" class="form-control" [(ngModel)]="room">
+                <option value="" selected disabled>Selecione</option>
+                <option value="teste">Teste</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" (click)="joinRoom()">Join</button>
+    </div>
+
+    <form class="form">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">New Room:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control">
+            </div>
+            <button class="btn btn-primary">Create</button>
+        </div>
+    </form>
+    <ac-content class="mx-auto"></ac-content>
+>>>>>>> bd5917ac3b8e75818183b37e056695f1f153c61d
 </div>

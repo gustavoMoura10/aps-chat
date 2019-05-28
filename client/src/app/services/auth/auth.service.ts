@@ -19,6 +19,10 @@ export class AuthService {
                 localStorage.setItem('auth', `${result.body['jwt']}`);
                 localStorage.setItem('userName', result.body['userName']);
                 this.router.navigate(['user', this.getUser()])
+<<<<<<< HEAD
+=======
+
+>>>>>>> bd5917ac3b8e75818183b37e056695f1f153c61d
             }
         ))
     }
@@ -46,5 +50,19 @@ export class AuthService {
     }
     hasToken() {
         return !!this.getToken();
+    }
+    validate() {
+        this.http.get(`${this.urlService.getUrlApi()}/api`).subscribe(
+            () => {
+                return false
+            },
+            error => {
+                if (error.status === 401) {
+                    this.router.navigate(['login']);
+                    return true;
+                }
+                return false
+            }
+        )
     }
 }

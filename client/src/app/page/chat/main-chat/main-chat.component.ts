@@ -6,9 +6,12 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ChatContentComponent } from '../chat-content/chat-content.component';
 
 @Component({
+    selector: 'ac-main-chat',
+    styleUrls: ['./main-chat.component.css'],
     templateUrl: './main-chat.component.html'
 })
 export class MainChatComponent implements OnInit {
+<<<<<<< HEAD
     userName: string
     room: Room;
     roomForm: FormGroup
@@ -49,5 +52,15 @@ export class MainChatComponent implements OnInit {
             name
         })
         this.getRooms();
+=======
+    userName: string;
+    room: string;
+    constructor(private mainChatService: MainChatService) { }
+    joinRoom() {
+        this.mainChatService.joinRoom({ userName: this.userName, room: this.room })
+    }
+    ngOnInit() {
+        this.userName = this.mainChatService.getUser();
+>>>>>>> bd5917ac3b8e75818183b37e056695f1f153c61d
     }
 }
