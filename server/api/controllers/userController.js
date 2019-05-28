@@ -10,6 +10,9 @@ userController.createUser = async (req, resp, next) => {
         const tabelaObject = User.tableAttributes
         delete tabelaObject.id;
         tabelaObject.confirmPassword = undefined;
+        console.log(Object.keys(req.body).sort().toString() === Object.keys(tabelaObject).sort().toString());
+        console.log(Object.keys(req.body).sort().toString());
+        console.log(Object.keys(tabelaObject).sort().toString());
         exceptions.equalBody(req.body, tabelaObject);
         Object.entries(req.body).forEach(el => {
             exceptions.empty(el[1]);

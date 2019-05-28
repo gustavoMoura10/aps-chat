@@ -12,7 +12,9 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
     registerForm: FormGroup
     user: User;
-
+    alert: string;
+    message: string;
+    bool: boolean;
     constructor(
         private formBuilder: FormBuilder,
         private platFormService: PlatformService,
@@ -28,12 +30,22 @@ export class RegisterComponent implements OnInit {
         this.user['confirmPassword'] = this.registerForm.get('confirmPassword').value;
         this.registerService.register(this.user).subscribe(
             result => {
-                this.router.navigate(['sign-in'])
+                this.router.navigate(['login'])
             },
             error => {
-                console.log(error)
+                this.messageEvent('alert-danger', 'Error on Server', true);
             }
         )
+    }
+    messageEvent(alert, message, bool) {
+        this.bool = bool;
+        this.alert = alert;
+        this.message = message;
+        setTimeout(() => {
+            this.bool = !bool;
+            this.alert = undefined;
+            this.message = undefined;
+        }, 5000)
     }
 
     ngOnInit() {

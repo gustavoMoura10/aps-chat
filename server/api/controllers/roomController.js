@@ -5,9 +5,9 @@ const roomController = {};
 roomController.createRoom = (req, resp, next) => {
     try {
         exceptions.empty(req.body);
+        console.log(req.body)
         const tabelaObject = Room.tableAttributes
         delete tabelaObject.id;
-        tabelaObject.confirmPassword = undefined;
         exceptions.equalBody(req.body, tabelaObject);
         Object.entries(req.body).forEach(el => {
             exceptions.empty(el[1]);
@@ -36,7 +36,7 @@ roomController.createRoom = (req, resp, next) => {
 roomController.findAllRooms = (req, resp, next) => {
     try {
         Room.findAll().then(result => {
-            resp.status(200).json(object);
+            resp.status(200).json(result);
         }
         ).error(error => {
             console.log('ERROR:', error);

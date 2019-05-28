@@ -12,7 +12,7 @@ export class MessageComponent implements OnInit {
     @Input() text: string;
     @Input() alert: string;
     ngOnInit() {
-        console.log(this.router.url)
+
     }
 
 }

@@ -3,7 +3,7 @@ module.exports = (app, server) => {
 
     app.use('', require('./routes/authRoute'))
     app.use('/api/', passport);
-    app.use('/api/user', require('./routes/roomRoute'));
+    app.use('/api/room', require('./routes/roomRoute'));
     const io = require('socket.io')(server);
     io.on("connection", socket => {
         let previousId;
@@ -17,17 +17,23 @@ module.exports = (app, server) => {
             socket.join(data.room);
             console.log(`USER:${data.userName} joined ROOM:${data.room}`);
             socket.broadcast.to(data.room)
-            .emit('newUserJoined',{user:data.userName,message:'Has Joined'});
+                .emit('newUserJoined', { user: data.userName, message: 'Has Joined' });
         });
         socket.on("leave", data => {
-            console.log(`USER:${data.userName} joined ROOM:${data.room}`);
+            console.log(`USER:${data.userName} leaved ROOM:${data.room}`);
             socket.broadcast.to(data.room)
-            .emit('userLeft',{user:data.userName,message:'Has Left'});
+                .emit('userLeft', { user: data.userName, message: 'Has Left' });
             socket.leave(data.room);
         });
-        socket.on("newRoom",data =>{
-            this.socket.emit('roomCreated',data)
+        socket.on("newRoom", data => {
+            console.log(data)
+            socket.emit('roomCreated', data)
         })
+        socket.on("message", data => {
+            console.log(data)
+            io.in(data.room).emit('newMessage', { user: data.userName, message: data.message })
+        })
+        console.log(io.sockets.clients('room'))
     });
 
 }

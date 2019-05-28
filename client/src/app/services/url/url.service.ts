@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class UrlService {
 
-    private URLAPI = 'http://localhost:3000'
+    private URLAPI = 'http://192.1.6.43:3000'
     constructor(
     ) { }
 

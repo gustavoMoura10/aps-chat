@@ -1,6 +1,11 @@
 <div class="content border border-primary">
     <div *ngFor="let v of messageArray">
-        <strong>{{v.user}}:</strong><strong>{{v.message}}</strong>
+        <div *ngIf="v.user === userName" style="left:0">
+            <strong>{{v.user}}:</strong><strong>{{v.message}}</strong>
+        </div>
+        <div *ngIf="v.user !== userName" style="right:0">
+            <strong>{{v.user}}:</strong><strong>{{v.message}}</strong>
+        </div>
     </div>
-    <ac-message-send></ac-message-send>
+    <ac-message-send [userName]="userName" [room]="room"></ac-message-send>
 </div>

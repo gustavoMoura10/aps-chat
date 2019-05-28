@@ -9,9 +9,10 @@ exceptions.empty = (object) => {
         throw 'String is empty'
 }
 exceptions.equalBody = (object1, object2) => {
-    if (Object.keys(object1).sort().toString() !==
-        Object.keys(object2).sort().toString())
+    if (Object.keys(object1).sort().toString() !== Object.keys(object2).sort().toString())
         throw 'Wrong Body'
+    else
+        console.log('Iguais')
 }
 exceptions.equals = (value1, value2) => {
     if (value1 !== value2)

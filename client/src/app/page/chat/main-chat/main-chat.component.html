@@ -5,21 +5,21 @@
         <div class="col-sm-4">
             <select name="" id="" class="form-control" [(ngModel)]="room">
                 <option value="" selected disabled>Selecione</option>
-                <option value="teste">Teste</option>
+                <option *ngFor="let r of listRooms" [ngValue]="r.name">{{r.name}}</option>
             </select>
         </div>
         <button class="btn btn-primary" (click)="joinRoom()">Join</button>
         <button class="btn btn-primary" (click)="leave()">Leave</button>
     </div>
 
-    <form class="form" [formGroup]="formRoom">
+    <form class="form" [formGroup]="formRoom" (submit)="createRoom()">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">New Room:</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control">
+                <input type="text" formControlName="name" class="form-control">
             </div>
-            <button class="btn btn-primary">Create</button>
+            <button class="btn btn-primary" type="submit">Create</button>
         </div>
     </form>
-    <ac-content class="mx-auto"></ac-content>
+    <ac-content class="mx-auto" [userName]="userName" [room]="room"></ac-content>
 </div>

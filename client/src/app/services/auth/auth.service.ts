@@ -22,13 +22,13 @@ export class AuthService {
             }
         ))
     }
-    validateToken(){
+    validateToken() {
         this.http.get(`${this.urlService.getUrlApi()}/api`).subscribe(
-            result =>{
+            result => {
 
             },
-            error =>{
-                if(error.status === 401){
+            error => {
+                if (error.status === 401 && this.getToken()) {
                     localStorage.clear();
                     this.router.navigate(['login'])
                 }
@@ -46,19 +46,5 @@ export class AuthService {
     }
     hasToken() {
         return !!this.getToken();
-    }
-    validate() {
-        this.http.get(`${this.urlService.getUrlApi()}/api`).subscribe(
-            () => {
-                return false
-            },
-            error => {
-                if (error.status === 401) {
-                    this.router.navigate(['login']);
-                    return true;
-                }
-                return false
-            }
-        )
     }
 }

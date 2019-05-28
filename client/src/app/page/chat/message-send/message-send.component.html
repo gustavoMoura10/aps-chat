@@ -1,7 +1,7 @@
 <div class="message-send footer container">
     <div class="grid">
-        <textarea class="form-control"></textarea>
-        <button class="btn btn-primary">
+        <textarea class="form-control" [(ngModel)]="message"></textarea>
+        <button class="btn btn-primary" (click)="messager()">
             <fa name="share"></fa>
         </button>
     </div>

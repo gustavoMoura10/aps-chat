@@ -5,7 +5,7 @@ import { TokenInterceptor } from 'src/app/services/auth/token.interceptor';
 import { MessageSendComponent } from './message-send/message-send.component';
 import { ContentComponent } from './content/content.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MessageModule } from '../shared/message/message.module';
 
@@ -19,7 +19,8 @@ import { MessageModule } from '../shared/message/message.module';
         FormsModule,
         CommonModule,
         AngularFontAwesomeModule,
-        MessageModule
+        MessageModule,
+        ReactiveFormsModule
     ],
     exports: [
         MainChatComponent

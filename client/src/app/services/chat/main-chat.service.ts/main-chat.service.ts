@@ -11,23 +11,43 @@ import { Room } from 'src/app/models/room.model';
 })
 export class MainChatService {
     constructor(
-        private authService: AuthService, 
+        private authService: AuthService,
         private socket: Socket,
-        private http:HttpClient,
-        private urlService:UrlService
-        ) {
+        private http: HttpClient,
+        private urlService: UrlService
+    ) {
     }
-    onRoomCreated(){
-        this.socket.on('roomCreated',data =>{
-            
-        })
+    roomCreated() {
+        let observable = new Observable<Array<Room>>(
+            observer => {
+                this.socket.on('roomCreated', (data) => {
+                    this.http.get<Array<Room>>(`${this.urlService.getUrlApi()}/api/room`).subscribe(
+                        result => {
+                            observer.next(result);
+                        },
+                        error => {
+                            observer.error(error);
+                        }
+
+                    )
+                })
+                return () => { this.socket.disconnect() }
+            }
+        )
+        return observable;
     }
-    emitNewRoom(data){
-        this.socket.emit('newRoom',data)
+    leave(data) {
+        this.socket.emit('leave', data)
     }
-    createRoom(room:Room){
+    findAllRooms() {
+        return this.http.get<Array<Room>>(`${this.urlService.getUrlApi()}/api/room`);
+    }
+    emitNewRoom(data) {
+        this.socket.emit('newRoom', data)
+    }
+    createRoom(room: Room) {
         delete room.id;
-        return this.http.post<Room>(`${this.urlService.getUrlApi()}/room`,room);
+        return this.http.post<Room>(`${this.urlService.getUrlApi()}/api/room`, room);
     }
     joinRoom(data) {
         this.socket.emit('join', data);
