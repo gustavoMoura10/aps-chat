@@ -10,8 +10,8 @@ import { Subject } from 'rxjs';
 export class ContentComponent implements OnChanges {
     @Input() userName: string;
     @Input() room: string;
-    private eventsSubject: Subject<void> = new Subject<void>();
-    messageArray: Array<{ user: string, message: string }> = [];
+    @Input() hasJoin: boolean
+    messageArray: Array<{ user: string, message: string, archive: boolean }> = [];
     constructor(private contentService: ContentService) {
         this.contentService.newUserJoined().subscribe(
             result => {
@@ -25,12 +25,13 @@ export class ContentComponent implements OnChanges {
         )
         this.contentService.newMessage().subscribe(
             result => {
-                console.log(result)
                 this.messageArray.push(result)
             }
         )
     }
     ngOnChanges() {
-
+        if (!this.hasJoin) {
+            this.messageArray = [];
+        }
     }
 }

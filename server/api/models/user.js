@@ -31,4 +31,5 @@ const User = connection.define('user', {
     })
 //Método que sincroniza o Objeto no banco
 User.sync({ force: false });
+//Exporta a nossa ORM para outros arquivos
 module.exports = User;

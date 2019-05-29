@@ -11,7 +11,7 @@ export class ContentService {
     }
 
     newUserJoined() {
-        let observable = new Observable<{ user: string, message: string }>(
+        let observable = new Observable<{ user: string, message: string, archive: boolean }>(
             observer => {
                 this.socket.on('newUserJoined', (data) => {
                     observer.next(data);
@@ -22,7 +22,7 @@ export class ContentService {
         return observable;
     }
     userLeftRoom() {
-        let observable = new Observable<{ user: string, message: string }>(
+        let observable = new Observable<{ user: string, message: string, archive: boolean }>(
             observer => {
                 this.socket.on('userLeft', (data) => {
                     observer.next(data);
@@ -34,7 +34,7 @@ export class ContentService {
     }
 
     newMessage() {
-        let observable = new Observable<{ user: string, message: string }>(
+        let observable = new Observable<{ user: string, message: string, archive: boolean }>(
             observer => {
                 this.socket.on('newMessage', (data) => {
                     console.log(data)

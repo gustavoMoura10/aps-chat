@@ -1,8 +1,22 @@
-<div class="message-send footer container">
-    <div class="grid">
-        <textarea class="form-control" [(ngModel)]="message"></textarea>
-        <button class="btn btn-primary" (click)="messager()">
-            <fa name="share"></fa>
-        </button>
+<div class="message-send footer">
+    <ac-message *ngIf="bool" [alert]="alert" [text]="message"></ac-message>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <textarea class="form-control" [(ngModel)]="messageSend"></textarea>
+            </div>
+            <div class="col-sm-5">
+                <div class="d-inline-flex p-2">
+                    <button class="btn-sm btn-primary" (click)="messager()">
+                        Enviar
+                        <i class="fa fa-share" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn-sm btn-file">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Procurar <input type="file" (change)="fileChanged($event)" accept="image/jpg">
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,10 +1,33 @@
-<div class="content border border-primary">
-    <div *ngFor="let v of messageArray">
-        <div *ngIf="v.user === userName" style="left:0">
-            <strong>{{v.user}}:</strong><strong>{{v.message}}</strong>
-        </div>
-        <div *ngIf="v.user !== userName" style="right:0">
-            <strong>{{v.user}}:</strong><strong>{{v.message}}</strong>
+<div>
+    <div class="content border border-primary" style="overflow-y: scroll">
+        <div *ngFor="let v of messageArray" style="clear:both">
+            <div *ngIf="v.user === userName" style="float: left">
+                <div class="card" style="width: 10rem;font-size: 12px">
+                    <div class="card-body">
+                        <p class="card-title text-primary">{{v.user}}</p>
+                        <div *ngIf="v?.archive === false">
+                            <p class="card-text">{{v.message}}</p>
+                        </div>
+                        <div *ngIf="v?.archive === true">
+                            <img [src]="v.message" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="v.user !== userName" style="float: right">
+                <div class="card" style="width: 10rem;font-size: 12px">
+                    <div class="card-body">
+                        <p class="card-title text-secondary">{{v.user}}</p>
+                        <div *ngIf="v?.archive === false">
+                            <p class="card-text">{{v.message}}</p>
+                        </div>
+                        <div *ngIf="v?.archive === true">
+
+                            <img [src]="v.message" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <ac-message-send [userName]="userName" [room]="room"></ac-message-send>

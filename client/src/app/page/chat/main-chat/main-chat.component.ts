@@ -17,7 +17,8 @@ export class MainChatComponent implements OnInit {
     bool: boolean;
     roomCreate: Room;
     formRoom: FormGroup;
-    listRooms: Array<Room> = []
+    listRooms: Array<Room> = [];
+    hasJoin: boolean;
     constructor(
         private mainChatService: MainChatService,
         private formBuilder: FormBuilder) {
@@ -32,10 +33,14 @@ export class MainChatComponent implements OnInit {
 
         )
     }
+    changeEvent() {
+        this.hasJoin = false;
+    }
     leave() {
         if (this.room) {
             this.mainChatService.leave({ userName: this.userName, room: this.room });
             this.room = undefined;
+            this.hasJoin = false;
         } else {
             this.messageEvent('alert-warning', 'No Room Selected', true)
         }
@@ -65,10 +70,13 @@ export class MainChatComponent implements OnInit {
         )
     }
     joinRoom() {
-        if (this.room)
+        if (this.room) {
+
             this.mainChatService.joinRoom({ userName: this.userName, room: this.room })
-        else
+            this.hasJoin = true;
+        } else {
             this.messageEvent('alert-warning', 'No Room Selected', true)
+        }
     }
     messageEvent(alert, message, bool) {
         this.bool = bool;

@@ -21,12 +21,23 @@ export class MessageSendComponent implements OnChanges {
     }
 
     messager() {
-        if (this.message && this.message !== '' && this.room) {
-            this.messageSendService.message({ userName: this.userName, room: this.room, message: this.message })
-
+        if (this.messageSend && this.messageSend !== '' && this.room) {
+            this.messageSendService.message({ userName: this.userName, room: this.room, message: this.messageSend, archive: false })
+            this.messageSend = "";
         } else {
             this.messageEvent('alert-warning', 'No Room Selected', true)
         }
+    }
+    fileChanged(event) {
+        let file = event.target.files[0]
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            this.messageSendService.message({ userName: this.userName, room: this.room, message: reader.result, archive: true })
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
     }
 
     messageEvent(alert, message, bool) {

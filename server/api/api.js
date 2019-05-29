@@ -16,24 +16,21 @@ module.exports = (app, server) => {
         socket.on("join", data => {
             socket.join(data.room);
             console.log(`USER:${data.userName} joined ROOM:${data.room}`);
-            socket.broadcast.to(data.room)
-                .emit('newUserJoined', { user: data.userName, message: 'Has Joined' });
+            io.in(data.room)
+                .emit('newUserJoined', { user: data.userName, message: 'Has Joined', archive: false });
         });
         socket.on("leave", data => {
             console.log(`USER:${data.userName} leaved ROOM:${data.room}`);
             socket.broadcast.to(data.room)
-                .emit('userLeft', { user: data.userName, message: 'Has Left' });
+                .emit('userLeft', { user: data.userName, message: 'Has Left', archive: false });
             socket.leave(data.room);
         });
         socket.on("newRoom", data => {
-            console.log(data)
-            socket.emit('roomCreated', data)
+            io.emit('roomCreated', data)
         })
         socket.on("message", data => {
-            console.log(data)
-            io.in(data.room).emit('newMessage', { user: data.userName, message: data.message })
+            io.in(data.room).emit('newMessage', { user: data.userName, message: data.message, archive: data.archive })
         })
-        console.log(io.sockets.clients('room'))
     });
 
 }
