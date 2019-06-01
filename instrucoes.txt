@@ -1,1 +1,23 @@
 
+Para que o programa possa ser executado
+deve-se primeiro ter o Node.JS instalado
+em sua maquina junto com o NPM.Pede-se também
+para ter o banco de dados mysql, já que seria
+necessário baixar o driver de outro banco para
+o sequelize conseguir acessar.
+
+Apos a instalação é necessário baixar o projeto
+e dentro da pasta server dar em um terminal o comando
+npm i. Isso instalara todas as dependências do projeto.
+Também deve ser feito na pasta client este mesmo comando.
+
+apos isso, dentro da pasta server/config
+deve-se criar um arquivo ".env". Este arquivo
+deverá ter o seguinte corpo.
+"module.exports = {
+     databaseName:'nome_que_você_quer_dar_ao_banco',
+     databaseUser:'nome_do_usuario_do_seu_banco_de_dados_mysql',
+     databaseHost:'localhost',
+     databasePassword:'senha_do_banco_de_dados_mysql',
+     jwtSecret:'senha_que_você_quer_para_ser_usada_como_token'
+}"
