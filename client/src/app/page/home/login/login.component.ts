@@ -4,14 +4,32 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { PlatformService } from 'src/app/services/platform/platform.service';
 import { User } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
+/**
+ * Componente da tela de login
+ */
 @Component({
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+    /**
+     * Atributo que cria um formulario
+     */
     loginForm: FormGroup;
+    /**
+     * Atributo da classe modelo
+     */
     private user: User;
+    /**
+     * Atributo para manipulação da DOM
+     */
     @ViewChild('email') emailInput: ElementRef<HTMLInputElement>;
+    /**
+     * Método contrutor que traz os serviços de
+     * criar um formulário, de autenticação, de verificação
+     * de plataforma e de rotas
+     */
     constructor(
         private formBuilder: FormBuilder,
         private authService: AuthService,
@@ -19,6 +37,9 @@ export class LoginComponent implements OnInit {
         private router: Router
     ) { }
 
+    /**
+     * Método de login
+     */
     signIn() {
         this.user = new User();
         this.user.email = this.loginForm.get('email').value;
@@ -38,6 +59,9 @@ export class LoginComponent implements OnInit {
             }
         )
     }
+    /**
+     * Método de incialização do componente
+     */
     ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],

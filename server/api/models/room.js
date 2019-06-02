@@ -4,24 +4,23 @@ const connection = require('../../config/connection');
 const DataTypes = require('sequelize');
 
 //Criação da ORM de nossa tabela
-const Room = connection.define('room', {
-    id: {
-        type: DataTypes.INTEGER,
+const Room = connection.define('room',{
+    id:{
+        type:DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true
     },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false
+    name:{
+        type:DataTypes.STRING,
+        allowNull:false
     }
 },
-    {
-        timestamps: false,
-        tableName: 'room'
-    });
-
+{
+    timestamps: false,
+    tableName: 'room'
+});
 //Método que sincroniza o Objeto no banco
 Room.sync({ force: false });
-//Exporta a nossa ORM para outros arquivos
+//Exporta a ORM
 module.exports = Room;

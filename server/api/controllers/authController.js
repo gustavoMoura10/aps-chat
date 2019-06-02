@@ -1,77 +1,100 @@
-//Modulo do User
+/**
+ * ORM de user
+ */
 const User = require('../models/user');
-//Pacote para geração de token em JWT
-const jwtSimple = require('jwt-simple')
-//Métodos para consulta do banco
+/**
+ * Módulo JWT para gerar token
+ */
+const jwtSimple = require('jwt-simple');
+/**
+ * Operadores para busca na tabela
+ */
 const Op = require('sequelize').Op;
-//Classe criada para jogar exceções
+/**
+ * Módulo para exceções
+ */
 const exceptions = require('../exceptions');
-//Configurações de ambiente
-const env = require('../../config/.env')
-//Pacote para encriptar a senha
+/**
+ * Configurações de ambiente
+ */
+const env = require('../../config/.env');
+/**
+ * Módulo para encriptar senha
+ */
 const bcrypt = require('bcrypt');
-//Classe a ser exportada
+/**
+ * Classe com os métodos a serem
+ * exportados
+ */
 const authController = {};
 
-//Método para login do usuário
+/**
+ * Método de login com os parametros
+ * de requeisição do usuário e 
+ * resposta do servidor
+ */
 authController.signIn = async (req, resp, next) => {
     try {
-        //Case que o corpo da requisição seja vazio
+        /**
+         * Verifica se o corpo da requisição
+         * está vázio
+         */
         exceptions.empty(req.body);
-        //Copia os atributos da ORM
+        /**
+         * Clone dos atributos da tabela
+         */
         const tabelaObject = User.tableAttributes
-        //Deleta informações para comparar ao corpo da requisição
         delete tabelaObject.id;
         delete tabelaObject.userName;
         delete tabelaObject.confirmPassword
         /**
-         * Método quer verifica se o corpo da requisição
-         * é igual ao corpo da ORM 
+         * Método que verifica se o corpo
+         * da requisição tem os mesmos atributos
+         * que os da tabela
          */
         exceptions.equalBody(req.body, tabelaObject);
         /**
-         * Verifica se os atributos do corpo da requisição
-         * estão vazios
+         * Método que verifica se cada valor
+         * do corpo da requisição é vazio
          */
-        Object.entries(req.body).forEach(el => {
-            exceptions.empty(req.body);
+        Object.values(req.body).forEach(el => {
+            exceptions.empty(el);
         });
         /**
-         * Método para achar no banco se há algum usuário
-         * que tenha o email enviado do corpo da requisição
+         * Método da ORM que busca um usuário
          */
         User.findOne({
             where: {
                 email: {
+                    /**
+                     * Caso o email do corpo da requisição
+                     * seja igual ao da tabela
+                     */
                     [Op.eq]: req.body.email
                 }
             }
         }).then(result => {
             /**
-             * Se há um resultado será comparada a senha do
-             * corpo da requisição com a senha salva no banco
-             * (já que ao salvar um novo usuário sua senha está
-             * em um código hash)
+             * Compara a senha enviada pelo corpo
+             * da requisição e a do banco para ver se
+             * são iguais
              */
             if (bcrypt.compareSync(req.body.password, result.password)) {
-                /**
-                 * Método para pegar o horário atual(Full)
-                 */
                 const now = Math.floor(Date.now() / 1000);
                 /**
                  * Payload que será enviado ao usuário
+                 * e será codificado pelo token
                  */
                 const payload = {
                     id: result.id,
-                    userName: result.userName,
+                    userName:result.userName,
                     email: result.email,
                     iat: now,
                     exp: now + 60 * 60 * 24
                 }
                 /**
-                 * Informações que vão ser enviadas ao usuário
-                 * para que ele possa autenticar as solicitações
-                 * pelo token (JWT)
+                 * Envia o payload e o token
+                 * para o usuário
                  */
                 resp.status(200).send({
                     ...payload,
@@ -79,17 +102,17 @@ authController.signIn = async (req, resp, next) => {
                 });
             } else {
                 /**
-                 * Caso ocorra um erro na requisição
+                 * Caso as senhas não sejam iguais
                  */
                 console.log('ERROR:Wrong Password');
-                resp.status(400).send({
+                resp.status(401).send({
                     exception: true,
                     message: 'Wrong Password'
                 });
             }
         }).error(error => {
             /**
-             * Caso haja algum erro no servidor
+             * Caso ocorra um erro no servidor
              */
             console.log('ERROR:', error);
             resp.status(500).send({
@@ -99,8 +122,8 @@ authController.signIn = async (req, resp, next) => {
         })
     } catch (error) {
         /**
-        * Caso ocorra um erro na requisição
-        */
+         * Caso ocorra um erro do usuário
+         */
         console.log('ERROR:', error);
         resp.status(400).send({
             exception: true,
@@ -108,21 +131,7 @@ authController.signIn = async (req, resp, next) => {
         });
     }
 }
-authController.validate = async (req, resp, next) => {
-    try {
-        exceptions.empty(req.body)
-        const token = jwtSimple.decode(req.body.jwt, env.jwtSecret);
-        if (new Date(token.exp * 1000) > new Date()) {
-            resp.status(200).json({
-                exception: false,
-                message: true
-            });
-        } else {
-            resp.status(400).send({ exception: true, message: "Expired" });
-        }
-    } catch (msg) {
-        resp.send(403).send({ exception: true, message: msg });
-    }
-}
-
+/**
+ * Exporta a classe com os métodos
+ */
 module.exports = authController

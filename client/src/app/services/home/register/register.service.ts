@@ -4,7 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { UrlService } from '../../url/url.service';
 import { tap } from 'rxjs/operators';
 
-
+/**
+ * Serviço para registrar um novo usuário
+ */
 @Injectable({
     providedIn: 'root'
 })

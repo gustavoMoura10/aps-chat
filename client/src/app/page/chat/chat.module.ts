@@ -8,7 +8,10 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MessageModule } from '../shared/message/message.module';
-
+/**
+ * Módulo do chat que apresenta os componentes que
+ * serão usados por ele
+ */
 @NgModule({
     declarations: [
         MainChatComponent,

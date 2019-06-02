@@ -6,6 +6,10 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MessageModule } from 'src/app/page/shared/message/message.module';
 import { MainComponent } from './main/main.component';
+/**
+ * Módulo home que traz os componentes 
+ * de registro, tela inicial e de login
+ */
 @NgModule({
     declarations: [
         MainComponent,

@@ -9,8 +9,18 @@ import { CommonModule } from '@angular/common';
 import { ChatModule } from './page/chat/chat.module';
 import { TokenInterceptor } from './services/auth/token.interceptor';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-
-const config: SocketIoConfig = { url: 'http://192.1.6.43:3000', options: {} };
+/**
+ * URL para o socke.io
+ */
+const config: SocketIoConfig = { url: 'localhost:3000', options: {} };
+/**
+ * Módulo principal da aplicação com suas
+ * importações de módulos próprios do Angular
+ * que ajudam no desenvolvimento como também
+ * módulos próprios. Também há os interceptadores
+ * que servem como serviços para manter o token
+ * no header
+ */
 @NgModule({
   declarations: [
     AppComponent,
